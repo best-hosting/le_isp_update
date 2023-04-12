@@ -1,12 +1,19 @@
+# Target for starting several units on single 'certbot.timer'.
 [Unit]
 Description=Renew isp certificates
-# Uncomment 'WantedBy=cert_renew.target' in 'certbot.service' and
-# 'le_isp_update.service' for # this to work.
+# Target must become inactive, when all done, otherwise timer won't restart
+# it. But default for targets is to remain active. Therefore..
+
+# Either use 'StopWhenUnneeded' and uncomment 'WantedBy=cert_renew.target' in
+# 'certbot.service' and 'le_isp_update.service'.
 #StopWhenUnneeded=true
 
 # Or use 'BindsTo'. But this requires 'Type=simple' or 'Type=exec' in
-# 'le_isp_update.service'.
+# 'le_isp_update.service' (binded service), because i need service to become
+# 'active'.
 BindsTo=le_isp_update.service
 
 [Install]
+# Tie enabling/disabling of 'timer' to enabling/disabling of # units dependent
+# on (started by) this target.
 Also=certbot.service le_isp_update.service

@@ -4,6 +4,13 @@ Requires=certbot.service
 After=certbot.service
 
 [Service]
+# If i use 'BindsTo=' in target, i need either Type='simple' or 'exec' here
+# (in service binded to), because i need that service to become 'active' (so
+# target can also become 'active').  'oneshot' services transition from
+# 'activating' directly into 'inactive', unless 'RemainAfterExit=true' is set
+# (which is not possible here, because i need this service to become
+# 'inactive' eventually, so target also terminates). When i use
+# 'StopWhenUnneeded', i may use 'oneshot' though.
 Type=simple
 ExecStart=/usr/local/bin/le_isp_update.sh
 
