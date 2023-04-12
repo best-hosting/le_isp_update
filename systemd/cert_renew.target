@@ -1,0 +1,12 @@
+[Unit]
+Description=Renew isp certificates
+# Uncomment 'WantedBy=cert_renew.target' in 'certbot.service' and
+# 'le_isp_update.service' for # this to work.
+#StopWhenUnneeded=true
+
+# Or use 'BindsTo'. But this requires 'Type=simple' or 'Type=exec' in
+# 'le_isp_update.service'.
+BindsTo=le_isp_update.service
+
+[Install]
+Also=certbot.service le_isp_update.service

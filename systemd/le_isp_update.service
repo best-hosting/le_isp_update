@@ -1,0 +1,12 @@
+[Unit]
+Description=Copy renewed certificates to ISP
+Requires=certbot.service
+After=certbot.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/le_isp_update.sh
+
+# For use with 'StopWhenUnneeded=true' in 'cert_renew.target'.
+#[Install]
+#WantedBy=cert_renew.target
